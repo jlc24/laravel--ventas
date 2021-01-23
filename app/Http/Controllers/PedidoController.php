@@ -14,7 +14,8 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+        Pedido::get();
+        return view('pedido.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        //
+        return view('pedido.create');
     }
 
     /**

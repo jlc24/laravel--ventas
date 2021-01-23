@@ -22,15 +22,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/clientes', ClienteController::class);
-
-Route::resource('/categorias', CategoriaController::class);
-
-Route::resource('/pedidos', PedidoController::class);
-
-Route::resource('/productos', ProductoController::class);
-
-Route::resource('/proveedores', ProveedorController::class);
+Route::Resources([
+    'categoria' => CategoriaController::class,
+    'producto' => ProductoController::class,
+    'cliente' => ClienteController::class,
+    'pedido' => PedidoController::class,
+    'proveedor' => ProveedorController::class,
+]);
 
 Auth::routes();
 
