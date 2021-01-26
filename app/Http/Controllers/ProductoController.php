@@ -15,7 +15,7 @@ class ProductoController extends Controller
     public function index()
     {
         Producto::get();
-        return view('producto.index');
+        return view('admin.producto.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        return view('admin.producto.create');
     }
 
     /**
