@@ -15,7 +15,7 @@ class ProveedorController extends Controller
     public function index()
     {
         Proveedor::get();
-        return view('proveedor.index');
+        return view('admin.proveedor.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        return view('proveedor.create');
+        return view('admin.proveedor.create');
     }
 
     /**

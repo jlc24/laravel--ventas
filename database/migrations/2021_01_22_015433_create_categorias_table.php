@@ -17,7 +17,6 @@ class CreateCategoriasTable extends Migration
             $table->id();
             $table->string('nombre', 30);
             $table->text('detalle')->nullable();
-
             $table->softDeletes();
             $table->timestamps();
         });

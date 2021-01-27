@@ -15,7 +15,7 @@ class PedidoController extends Controller
     public function index()
     {
         Pedido::get();
-        return view('pedido.index');
+        return view('admin.pedido.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        return view('pedido.create');
+        return view('admin.pedido.create');
     }
 
     /**

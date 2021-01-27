@@ -15,7 +15,7 @@ class ClienteController extends Controller
     public function index()
     {
         Cliente::get();
-        return view('cliente.index');
+        return view('admin.cliente.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('cliente.create');
+        return view('admin.cliente.create');
     }
 
     /**

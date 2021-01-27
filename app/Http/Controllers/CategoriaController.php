@@ -15,7 +15,7 @@ class CategoriaController extends Controller
     public function index()
     {
         Categoria::get();
-        return view('categoria.index');
+        return view('admin.categoria.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('categoria.create');
+        return view('admin.categoria.create');
     }
 
     /**
