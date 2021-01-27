@@ -16,10 +16,12 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
-                            <th>Descripcion</th>
+                            <th>Precio</th>
                             <th>Cantidad</th>
-                            <th>Imagenes</th>
                             <th>Estado</th>
+                            <th>Imagen</th>
+                            <th>Descripcion</th>
+                            <th>Fecha</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -27,14 +29,16 @@
                         <tr>
                             <td>1</td>
                             <td>Coca Cola</td>
-                            <td>Bebida</td>
+                            <td>12,5</td>
                             <td>19</td>
-                            <td>/img/coca.png</td>
                             <td>
-                                <a href="#" class="btn btn-success btn-sm">En inventario</a>
+                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
                             </td>
+                            <td>/img/coca.png</td>
+                            <td>Bebida de 2lts</td>
+                            <td>2021-01-26</td>
                             <td>
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <a href="" class="btn btn-outline-primary">Ver</a>
                                     <a href="" class="btn btn-outline-primary">Editar</a>
                                     <a href="" class="btn btn-outline-primary">Eliminar</a>
@@ -44,14 +48,16 @@
                         <tr>
                             <td>2</td>
                             <td>Pepsi</td>
-                            <td>Bebida</td>
-                            <td>54</td>
-                            <td>/img/pepsi.png</td>
+                            <td>11</td>
+                            <td>24</td>
                             <td>
-                                <a href="#" class="btn btn-success btn-sm">En inventario</a>
+                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
                             </td>
+                            <td>/img/pepsi.png</td>
+                            <td>Bebida de 2lts</td>
+                            <td>2021-01-26</td>
                             <td>
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <a href="" class="btn btn-outline-primary">Ver</a>
                                     <a href="" class="btn btn-outline-primary">Editar</a>
                                     <a href="" class="btn btn-outline-primary">Eliminar</a>
@@ -61,14 +67,16 @@
                         <tr>
                             <td>3</td>
                             <td>Pan</td>
-                            <td>Alimento</td>
-                            <td>345</td>
-                            <td>/img/pan.png</td>
+                            <td>12,5</td>
+                            <td>267</td>
                             <td>
-                                <a href="#" class="btn btn-success btn-sm">En inventario</a>
+                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
                             </td>
+                            <td>/img/pan.png</td>
+                            <td>Pan para comer</td>
+                            <td>2021-01-26</td>
                             <td>
-                                <div class="btn-group">
+                                <div class="btn-group btn-group-sm">
                                     <a href="" class="btn btn-outline-primary">Ver</a>
                                     <a href="" class="btn btn-outline-primary">Editar</a>
                                     <a href="" class="btn btn-outline-primary">Eliminar</a>
