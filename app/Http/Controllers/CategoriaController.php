@@ -14,8 +14,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        Categoria::get();
-        return view('admin.categoria.index');
+        $categorias = Categoria::get();
+        return view('admin.categoria.index', compact('categorias'));
     }
 
     /**
@@ -36,7 +36,15 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validacion del lado del servidor
+        $request->validate([
+            "nombre" => "required"
+        ]);
+        $cat = new Categoria;
+        $cat->nombre = $request->nombre;
+        $cat->detalle = $request->detalle;
+        $cat->save();
+        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria guardados correctamente');
     }
 
     /**
@@ -68,9 +76,16 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, Categoria $categorium)
     {
-        //
+        // Validacion del lado del servidor
+        $request->validate([
+            "nombre" => "required"
+        ]);
+        $categorium->nombre = $request->newNombre;
+        $categorium->detalle = $request->newDetalle;
+        $categorium->save();
+        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria actualizados correctamente');
     }
 
     /**
@@ -79,8 +94,9 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(Categoria $categorium)
     {
-        //
+        $categorium->delete();
+        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria eliminados correctamente');
     }
 }
