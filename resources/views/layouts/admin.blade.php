@@ -96,7 +96,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('categoria.create') }}" class="nav-link">
+                                <a href="" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Nuevo Categoria</p>
                                 </a>
@@ -113,13 +113,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('categoria.index') }}" class="nav-link">
+                                <a href="{{ route('cliente.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Lista Clientes</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('categoria.create') }}" class="nav-link">
+                                <a href="{{ route('cliente.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Nuevo Cliente</p>
                                 </a>
@@ -136,13 +136,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('categoria.index') }}" class="nav-link">
+                                <a href="{{ route('pedido.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Lista Pedidos</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('categoria.create') }}" class="nav-link">
+                                <a href="{{ route('pedido.create') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Nuevo Pedido</p>
                                 </a>

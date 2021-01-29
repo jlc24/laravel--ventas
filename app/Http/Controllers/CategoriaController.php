@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveCategoriaRequest;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 
@@ -34,16 +35,19 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveCategoriaRequest $request)
     {
         // Validacion del lado del servidor
-        $request->validate([
-            "nombre" => "required"
-        ]);
-        $cat = new Categoria;
-        $cat->nombre = $request->nombre;
-        $cat->detalle = $request->detalle;
-        $cat->save();
+        // $request->validate([
+        //     "nombre" => "required"
+        // ]);
+        // $cat = new Categoria;
+        // $cat->nombre = $request->nombre;
+        // $cat->detalle = $request->detalle;
+        // $cat->save();
+
+        Categoria::create($request->validated());
+
         return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria guardados correctamente');
     }
 
@@ -76,16 +80,21 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categorium)
+    public function update(Categoria $categoria, SaveCategoriaRequest $request)
     {
+        // return $request;
         // Validacion del lado del servidor
-        $request->validate([
-            "nombre" => "required"
-        ]);
-        $categorium->nombre = $request->newNombre;
-        $categorium->detalle = $request->newDetalle;
-        $categorium->save();
-        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria actualizados correctamente');
+        // $valido = $request->validate([
+        //     "nombre" => "required"
+        // ]);
+        // $categoria = Categoria::find($id);
+        // $categoria->nombre = $request->newNombre;
+        // $categoria->detalle = $request->newDetalle;
+        // $categoria->save();
+
+        $categoria->update($request->validated());
+
+        return redirect()->route('categoria.index', $categoria)->with('Status', 'Datos de Categoria actualizados correctamente');
     }
 
     /**
@@ -94,9 +103,9 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categorium)
+    public function destroy(Categoria $categoria)
     {
-        $categorium->delete();
+        $categoria->delete();
         return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria eliminados correctamente');
     }
 }

@@ -10,4 +10,5 @@ class Categoria extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = ['nombre', 'detalle'];
 }
