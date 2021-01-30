@@ -35,18 +35,18 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveCategoriaRequest $request)
+    public function store(Request $request)
     {
         // Validacion del lado del servidor
-        // $request->validate([
-        //     "nombre" => "required"
-        // ]);
-        // $cat = new Categoria;
-        // $cat->nombre = $request->nombre;
-        // $cat->detalle = $request->detalle;
-        // $cat->save();
+        $request->validate([
+            "nombre" => "required"
+        ]);
+        $cat = new Categoria;
+        $cat->nombre = $request->nombre;
+        $cat->detalle = $request->detalle;
+        $cat->save();
 
-        Categoria::create($request->validated());
+        // Categoria::create($request->validated());
 
         return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria guardados correctamente');
     }
@@ -80,7 +80,7 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Categoria $categoria, SaveCategoriaRequest $request)
+    public function update(Categoria $categoria, Request $request)
     {
         // return $request;
         // Validacion del lado del servidor
@@ -88,11 +88,11 @@ class CategoriaController extends Controller
         //     "nombre" => "required"
         // ]);
         // $categoria = Categoria::find($id);
-        // $categoria->nombre = $request->newNombre;
-        // $categoria->detalle = $request->newDetalle;
-        // $categoria->save();
+        $categoria->nombre = $request->newNombre;
+        $categoria->detalle = $request->newDetalle;
+        $categoria->save();
 
-        $categoria->update($request->validated());
+        // $categoria->update($request->validated());
 
         return redirect()->route('categoria.index', $categoria)->with('Status', 'Datos de Categoria actualizados correctamente');
     }
