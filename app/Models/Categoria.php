@@ -11,4 +11,9 @@ class Categoria extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = ['nombre', 'detalle'];
+
+    public function productos()
+    {
+        return $this->hasMany("App\Models\Producto");
+    }
 }

@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header d-flex">
                 <h5 class="card-title">Lista de Productos</h5>
-                <a href="#" class="btn btn-success btn-sm ml-auto" data-toggle="modal" data-target="#modalAgregarUsuario">
+                <a href="#" class="btn btn-success btn-sm ml-auto" data-toggle="modal" data-target="#modalAgregarProducto">
                     <i class="fas fa-cloud-upload-alt"></i> Nuevo Producto
                 </a>
             </div>
@@ -18,74 +18,196 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Estado</th>
-                            <th>Imagen</th>
-                            <th>Descripcion</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
+                            <th>NOMBRE</th>
+                            <th>PRECIO</th>
+                            <th>CANTIDAD</th>
+                            <th>SUB-TOTAL</th>
+                            <th>IMAGEN</th>
+                            <th>CATEGORIA</th>
+                            <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Coca Cola</td>
-                            <td>12,5</td>
-                            <td>19</td>
-                            <td>
-                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
-                            </td>
-                            <td>/img/coca.png</td>
-                            <td>Bebida de 2lts</td>
-                            <td>2021-01-26</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="" class="btn btn-outline-primary">Ver</a>
-                                    <a href="" class="btn btn-outline-primary">Editar</a>
-                                    <a href="" class="btn btn-outline-primary">Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Pepsi</td>
-                            <td>11</td>
-                            <td>24</td>
-                            <td>
-                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
-                            </td>
-                            <td>/img/pepsi.png</td>
-                            <td>Bebida de 2lts</td>
-                            <td>2021-01-26</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="" class="btn btn-outline-primary">Ver</a>
-                                    <a href="" class="btn btn-outline-primary">Editar</a>
-                                    <a href="" class="btn btn-outline-primary">Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Pan</td>
-                            <td>12,5</td>
-                            <td>267</td>
-                            <td>
-                                <a href="#" class="btn btn-success btn-sm">Disponible</a>
-                            </td>
-                            <td>/img/pan.png</td>
-                            <td>Pan para comer</td>
-                            <td>2021-01-26</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a href="" class="btn btn-outline-primary">Ver</a>
-                                    <a href="" class="btn btn-outline-primary">Editar</a>
-                                    <a href="" class="btn btn-outline-primary">Eliminar</a>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach($productos as $key => $prod)
+                            <tr class="text-center">
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $prod->nombre }}</td>
+                                <td>{{ $prod->precio }}</td>
+                                <td>{{ $prod->cantidad }}</td>
+                                <td>{{ $prod->precio * $prod->cantidad }}</td>
+                                <td>IMAGEN</td>
+                                <td>{{ $prod->categoria->nombre }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalVerProd{{ $prod->id }}">Ver</a>
+                                        <!--===============================================
+                                        =                 Modal Ver Categoria             =
+                                        ================================================-->
+                                        <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalEditarProd{{ $prod->id }}">Editar</a>
+                                        <!--===============================================
+                                        =               Modal Editar Categoria            =
+                                        ================================================-->
+                                        <div class="modal fade" id="modalEditarProd{{ $prod->id }}" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('producto.update', $prod->id) }}" role="form" method="post" enctype="multipart/form-data"">
+                                                        @csrf
+                                                        @Method('PUT')
+                                                        <div class="modal-header" style="background: #3c8dbc; color: white;"">
+                                                            <h5 class="modal-title">Editar Producto: {{ $prod->nombre }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="box-body">
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">N</span>
+                                                                        </div>
+                                                                        <input type="text" name="nombre" class="form-control input-lg" value="{{ $prod->nombre }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">P</span>
+                                                                        </div>
+                                                                        <input type="text" name="precio" class="form-control input-lg" value="{{ $prod->precio }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">C</span>
+                                                                        </div>
+                                                                        <input type="text" name="cantidad" class="form-control input-lg" value="{{ $prod->cantidad }}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <select name="categoria_id" id="" class="form-control">
+                                                                            <option value="{{ $prod->categoria->id }}">{{ $prod->categoria->nombre }}</option>
+                                                                            @foreach($categorias as $cat)
+                                                                            <option value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <select name="estado" id="" class="form-control">
+                                                                            <option value="">Selecciona Estado ...</option>
+                                                                            <option value="1">Activo</option>
+                                                                            <option value="0">Inactivo</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <textarea name="descripcion" class="form-control" >{{ $prod->descripcion }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FC</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control input-lg" name="fecha_created" value="Creado: {{ $prod->created_at }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FM</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control input-lg" name="fecha_updated" value="Modificado: {{ $prod->updated_at }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm"">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroupFileAddon01">Subir Imagen</span>
+                                                                        </div>
+                                                                         <div class="custom-file">
+                                                                            <input type="file" class="custom-file-input imagen" accept="image/jpeg, image/png" name="imagen" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                                                            <label class="custom-file-label" for="inputGroupFile01">Selecciona una Imagen...</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="help-block">Peso máximo de la foto 2 MB</p>
+                                                                    <img src="" class="img-thumbnail ver" width="100px">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalEliminarCategoria{{ $prod->id }}">Eliminar</a>
+                                        <!--===============================================
+                                        =              Modal Eliminar Categoria           =
+                                        ================================================-->
+                                        <div class="modal fade" id="modalEliminarCategoria{{ $prod->id }}" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('categoria.destroy', $prod->id) }}" role="form" method="post" enctype="multipart/form-data"">
+                                                        @csrf
+                                                        @Method('DELETE')
+                                                        <div class="modal-header" style="background: #C72333; color: white;"">
+                                                            <h5 class="modal-title">Eliminar Categoria: {{ $prod->nombre }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="box-body">
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">N</span>
+                                                                        </div>
+                                                                        <input type="text" class="form-control input-lg" name="nombreli" value="{{ $prod->nombre }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">D</span>
+                                                                        <textarea name="descripcioneli" class="form-control" cols="30" rows="10">{{ $prod->descripcion }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">FC</span>
+                                                                        <input type="text" class="form-control input-lg" name="fecha_createdeli" value="Creado: {{ $prod->created_at }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">FM</span>
+                                                                        <input type="text" class="form-control input-lg" name="fecha_updatedeli" value="Modificado: {{ $prod->updated_at }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <p>¿Esta Seguro de Eliminar éste Producto?</p>
+                                                            NOTA: Si elimina no podrá recuperar los datos
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -93,122 +215,89 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalAgregarUsuario" role="dialog">
+<!--===============================================
+=               Modal Agregar Producto            =
+================================================-->
+
+<div class="modal fade" id="modalAgregarProducto" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="" role="form" method="post" enctype="multipart/form-data"">
+            <form action="{{ route('producto.store') }}" role="form" method="post" enctype="multipart/form-data"">
                 @csrf
                 <div class="modal-header" style="background: #3c8dbc; color: white;"">
-                    <h4 class="modal-title">Agregar Usuario</h4>
+                    <h5 class="modal-title">Agregar Nuevo Producto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
                     <div class="box-body">
                         <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input type="text" class="form-control input-lg" name="newNombre" placeholder="Ingresar Nombre" required>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">N</span>
+                                </div>
+                                <input type="text" name="nombre" class="form-control input-lg" value="{{ old('nombre') }}" placeholder="Ingrese Nombre">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input type="text" class="form-control input-lg" name="newUsuario" placeholder="Ingresar Usuario" required>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">P</span>
+                                </div>
+                                <input type="text" name="precio" class="form-control input-lg" value="{{ old('precio') }}" placeholder="Ingrese Precio">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input type="password" class="form-control input-lg" name="newPassword" placeholder="Ingresar Contraseña" required>
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">C</span>
+                                </div>
+                                <input type="text" name="cantidad" class="form-control input-lg" value="{{ old('cantidad') }}" placeholder="Ingrese Cantidad">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                <select class="form-control input-lg" name="newPerfil">
-                                    <option value="">Selecciona Perfil...</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Especial">Especial</option>
-                                    <option value="Vendedor">Vendedor</option>
+                            <div class="input-group input-group-sm">
+                                <select name="categoria_id" id="" class="form-control form-control-sm">
+                                    <option value="">Selecciona Categoria ...</option>
+                                    @foreach($categorias as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="panel">SUBIR FOTO</div>
-                            <input type="file" class="newFoto" name="newFoto">
+                            <div class="input-group input-group-sm">
+                                <select name="estado" id="" class="form-control form-control-sm">
+                                    <option value="">Selecciona Estado ...</option>
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-sm">
+                                <textarea name="descripcion" class="form-control" placeholder="Ingrese Descripcion"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-sm"">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupFileAddon01">Subir Imagen</span>
+                                </div>
+                                 <div class="custom-file">
+                                    <input type="file" class="custom-file-input imagen" accept="image/jpeg, image/png" name="imagen" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Selecciona una Imagen...</label>
+                                </div>
+                            </div>
                             <p class="help-block">Peso máximo de la foto 2 MB</p>
                             <img src="" class="img-thumbnail ver" width="100px">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!--===============================================
-=               Modal Agregar Usuario             =
-================================================-->
-
-<div class="modal fade" id="modalAgregarUsuarioASD" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form role="form" method="post" enctype="multipart/form-data"">
-                @csrf
-                <div class="modal-header" style="background: #3c8dbc; color: white;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Agregar Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input type="text" class="form-control input-lg" name="newNombre" placeholder="Ingresar Nombre" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input type="text" class="form-control input-lg" name="newUsuario" placeholder="Ingresar Usuario" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input type="password" class="form-control input-lg" name="newPassword" placeholder="Ingresar Contraseña" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                                <select class="form-control input-lg" name="newPerfil">
-                                    <option value="">Selecciona Perfil...</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Especial">Especial</option>
-                                    <option value="Vendedor">Vendedor</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="panel">SUBIR FOTO</div>
-                            <input type="file" class="newFoto" name="newFoto">
-                            <p class="help-block">Peso máximo de la foto 2 MB</p>
-                            <img src="" class="img-thumbnail ver" width="100px">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar Datos</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>
@@ -223,7 +312,7 @@
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "buttons": []
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
     })
 </script>

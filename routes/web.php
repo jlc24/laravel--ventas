@@ -12,6 +12,8 @@ Route::get('/',function(){
     return view('inicio');
 });
 
+Route::get('categoria/{id}/productos', [CategoriaController::class, 'categoria_por_producto'])->name('categoria.mostrar_productos');
+
 Route::Resources([
     // 'categoria' => CategoriaController::class,
     'producto' => ProductoController::class,

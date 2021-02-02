@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -14,8 +16,9 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        Producto::get();
-        return view('admin.producto.index');
+        $productos = Producto::get();
+        $categorias = Categoria::get();
+        return view('admin.producto.index', compact('productos','categorias'));
     }
 
     /**
@@ -25,7 +28,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('admin.producto.create');
+
     }
 
     /**
@@ -36,7 +39,39 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reglas = [
+            'nombre' => 'required|unique:productos|max:200',
+            'cantidad' => 'required',
+            'estado' => 'required'
+        ];
+        $validator = Validator::make($request->all(), $reglas);
+
+        if ($validator->fails()) {
+            return redirect('/producto/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        /*
+        //return back()->with('datos',$request);
+        Categoria::findorFail($request->categoria_id);
+        //Validar
+        $reglas = [
+            "nombre" => "required|min:2|max:200|unique:productos",
+
+        ];
+         $validator = $request->validate($reglas);*/
+
+        //guardar en la base de datos
+        $prod = new Producto;
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->estado = $request->estado;
+        $prod->save();
+
+        return redirect()->route('producto.index')->with("status", "Datos de Producto registrado exitosamente");
     }
 
     /**
@@ -70,7 +105,27 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $reglas = [
+            'nombre' => 'required|unique:productos|max:200',
+            'cantidad' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $reglas);
+
+        if ($validator->fails()) {
+            return redirect()->route('producto.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // $prod = Producto::find($id);
+        $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
+        $producto->cantidad = $request->cantidad;
+        $producto->descripcion = $request->descripcion;
+        $producto->categoria_id = $request->categoria_id;
+        $producto->save();
+
+        return redirect()->route('producto.index')->with("status", "Datos de Producto Actualizados exitosamente");
     }
 
     /**
@@ -81,6 +136,7 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+        return redirect()->route('producto.index')->with("status", "Datos de Producto Eliminado exitosamente");
     }
 }

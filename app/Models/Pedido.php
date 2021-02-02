@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Pedido extends Model
 {
     use HasFactory;
+
+    // protected $primarykey = "idped";
+
+    public function cliente()
+    {
+        return $this->belongsTo("App\Models\Cliente");
+    }
+
+    public function productos()
+    {
+        return $this->belongsToMany("App\Models\Producto");
+    }
 }

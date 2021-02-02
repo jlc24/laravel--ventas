@@ -20,7 +20,6 @@
                             <th>#</th>
                             <th>NOMBRE</th>
                             <th>DETALLE</th>
-                            <th>FECHA</th>
                             <th>ACCIONES</th>
                         </tr>
                     </thead>
@@ -30,9 +29,9 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $cat->nombre }}</td>
                             <td>{{ $cat->detalle }}</td>
-                            <td>{{ $cat->updated_at }}</td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('categoria.mostrar_productos', $cat->id) }}" class="btn btn-outline-primary">Ver Productos</a>
                                     <a href="" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalEditarCategoria{{ $cat->id }}">Editar</a>
                                     <!--===============================================
                                     =               Modal Editar Categoria            =
@@ -54,13 +53,25 @@
                                                             <div class="form-group">
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">N</span>
-                                                                    <input type="text" class="form-control input-lg" name="newNombre" value="{{ $cat->nombre }}">
+                                                                    <input type="text" class="form-control input-lg" name="nombre" value="{{ $cat->nombre }}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="input-group">
                                                                     <span class="input-group-text">D</span>
-                                                                    <input type="text" class="form-control input-lg" name="newDetalle" value="{{ $cat->detalle }}">
+                                                                    <input type="text" class="form-control input-lg" name="detalle" value="{{ $cat->detalle }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">FC</span>
+                                                                    <input type="text" class="form-control input-lg" name="fecha_created" value="Creado: {{ $cat->created_at }}" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">FM</span>
+                                                                    <input type="text" class="form-control input-lg" name="fecha_updated" value="Modificado: {{ $cat->updated_at }}" disabled>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -103,6 +114,18 @@
                                                                     <input type="text" class="form-control input-lg" name="detalleli" value="{{ $cat->detalle }}" disabled>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">FC</span>
+                                                                    <input type="text" class="form-control input-lg" name="fecha_createdeli" value="Creado: {{ $cat->created_at }}" disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">FM</span>
+                                                                    <input type="text" class="form-control input-lg" name="fecha_updatedeli" value="Modificado: {{ $cat->updated_at }}" disabled>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <p>¿Esta Seguro de Eliminar esta Categoria?</p>
                                                         NOTA: Si elimina no podrá recuperar los datos
@@ -132,10 +155,19 @@
 <div class="modal fade" id="modalAgregarCategoria" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <form action="{{ route('categoria.store') }}" role="form" method="post" enctype="multipart/form-data"">
                 @csrf
                 <div class="modal-header" style="background: #3c8dbc; color: white;"">
-                    <h4 class="modal-title">Agregar Categoria</h4>
+                    <h4 class="modal-title">Agregar Nueva Categoria</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -145,14 +177,20 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">N</span>
-                                <input type="text" class="form-control input-lg" name="nombre" placeholder="Ingresar Nombre" required>
+                                <input type="text" name="nombre" class="form-control input-lg @error('nombre') is-invalid @enderror" placeholder="Ingresar Nombre" value="{{ old('nombre') }}" required>
                             </div>
+                            @error('nombre')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">D</span>
-                                <input type="text" class="form-control input-lg" name="detalle" placeholder="Ingresar Detalle" required>
+                                <input type="text" name="detalle" class="form-control input-lg @error('detalle') is-invalid @enderror" placeholder="Ingresar Detalle" value="{{ old('detalle') }}" required>
                             </div>
+                            @error('nombre')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -165,8 +203,6 @@
     </div>
 </div>
 
-
-
 <!-- Page specific script -->
 <script>
     $(function () {
@@ -174,8 +210,16 @@
         "responsive": true,
         "lengthChange": false,
         "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "buttons": []
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
     })
 </script>
 @endsection
+
+{{-- @section('js')
+    @if($errors->any())
+        <script>
+            $('#modalAgregarCategoria').modal('show')
+        </script>
+    @endif
+@endsection --}}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveCategoriaRequest;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoriaController extends Controller
 {
@@ -26,7 +27,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('admin.categoria.create');
+
     }
 
     /**
@@ -38,9 +39,20 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         // Validacion del lado del servidor
-        $request->validate([
-            "nombre" => "required"
+        $validator = Validator::make($request->all(), [
+            "nombre" => "required|unique:categorias|max:30",
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('categoria.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        // Validacion del lado del servidor
+        /*$request->validate([
+            "nombre" => "required"
+        ]);*/
+
         $cat = new Categoria;
         $cat->nombre = $request->nombre;
         $cat->detalle = $request->detalle;
@@ -48,7 +60,7 @@ class CategoriaController extends Controller
 
         // Categoria::create($request->validated());
 
-        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria guardados correctamente');
+        return redirect()->route('categoria.index')->with('status', 'Datos de Categoria guardados correctamente');
     }
 
     /**
@@ -84,17 +96,17 @@ class CategoriaController extends Controller
     {
         // return $request;
         // Validacion del lado del servidor
-        // $valido = $request->validate([
-        //     "nombre" => "required"
-        // ]);
+        $request->validate([
+            "nombre" => "required"
+        ]);
         // $categoria = Categoria::find($id);
-        $categoria->nombre = $request->newNombre;
-        $categoria->detalle = $request->newDetalle;
+        $categoria->nombre = $request->nombre;
+        $categoria->detalle = $request->detalle;
         $categoria->save();
 
         // $categoria->update($request->validated());
 
-        return redirect()->route('categoria.index', $categoria)->with('Status', 'Datos de Categoria actualizados correctamente');
+        return redirect()->route('categoria.index')->with('status', 'Datos de Categoria actualizados correctamente');
     }
 
     /**
@@ -106,6 +118,12 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
-        return redirect()->route('categoria.index')->with('Status', 'Datos de Categoria eliminados correctamente');
+        return redirect()->route('categoria.index')->with('status', 'Datos de Categoria eliminados correctamente');
+    }
+
+    public function categoria_por_producto($id)
+    {
+        $categoria = Categoria::find($id);
+        return view('admin.categoria.mostrar_prod', compact('categoria'));
     }
 }
