@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- DataTables -->
@@ -20,7 +22,7 @@
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('adminlte/dist/js/pages/dashboard2.js') }}"></script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse">
     <div class="wrapper">
     <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -38,7 +40,7 @@
                         <span class="hidden-xs">Administrador</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <div class="card">
+                        <div class="card bg-light">
                             <div class="card-header text-center">
                                 <span class="hidden-xsr">Datos Usuario</span>
                             </div>
@@ -69,11 +71,16 @@
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
+                <?php
+                    function activeMenu($url){
+                        return request()->is($url) ? 'active' : '';
+                    }
+                ?>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="/" class="nav-link active">
+                            <a href="/" class="nav-link {{ activeMenu('/') }}">
                             <i class="nav-icon fas fa-home"></i>
                                 <p>
                                     INICIO
@@ -81,7 +88,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('categoria.index') }}" class="nav-link">
+                            <a href="{{ route('categoria.index') }}" class="nav-link {{ activeMenu('categoria') }}">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     CATEGORIAS
@@ -89,7 +96,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link {{ activeMenu('cliente') }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     CLIENTES
@@ -135,27 +142,12 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('producto.index') }}" class="nav-link {{ activeMenu('producto') }}">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
                                 <p>
                                     PRODUCTOS
-                                    <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('producto.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Lista Producto</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('producto.create') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Nuevo producto</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -198,7 +190,7 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item active">@yield('titulo')</li>
                 </ol>
             </div><!-- /.col -->
@@ -277,3 +269,5 @@
     @yield('js')
 </body>
 </html>
+
+

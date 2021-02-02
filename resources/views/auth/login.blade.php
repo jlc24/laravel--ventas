@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -70,4 +70,78 @@
         </div>
     </div>
 </div>
+@endsection --}}
+
+@extends('layouts.app')
+
+@section('titulo', 'Iniciar Sesion')
+
+@section('sesion_usuario')
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="/" class="h1"><b>Empresa</b>VENTAS</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Ingrese sus datos para continuar</p>
+                <form action="{{ route('login') }}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Correo Electrónico" required autocomplete="email" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Contraseña" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label for="remember">
+                                    Recordarme
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-5">
+                            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesion</button>
+                        </div>
+                    <!-- /.col -->
+                    </div>
+                </form>
+                {{-- @if(Route::has('password.request'))
+                    <p class="mb-1">
+                        <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+                    </p>
+                @endif --}}
+                <p class="mb-0">
+                    <a href="{{ route('register') }}" class="text-center">Registrar nueva cuenta</a>
+                </p>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
 @endsection
+
+

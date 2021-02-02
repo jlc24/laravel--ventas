@@ -98,9 +98,13 @@
                                                                 <div class="form-group">
                                                                     <div class="input-group input-group-sm">
                                                                         <select name="estado" id="" class="form-control">
-                                                                            <option value="">Selecciona Estado ...</option>
-                                                                            <option value="1">Activo</option>
-                                                                            <option value="0">Inactivo</option>
+                                                                            @if($prod->estado == '1')
+                                                                                <option value="1">Activo</option>
+                                                                                <option value="0">Inactivo</option>
+                                                                            @else
+                                                                                <option value="0">Inactivo</option>
+                                                                                <option value="1">Activo</option>
+                                                                            @endif
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -109,22 +113,7 @@
                                                                         <textarea name="descripcion" class="form-control" >{{ $prod->descripcion }}</textarea>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <div class="input-group input-group-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FC</span>
-                                                                        </div>
-                                                                        <input type="text" class="form-control input-lg" name="fecha_created" value="Creado: {{ $prod->created_at }}" disabled>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div class="input-group input-group-sm">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FM</span>
-                                                                        </div>
-                                                                        <input type="text" class="form-control input-lg" name="fecha_updated" value="Modificado: {{ $prod->updated_at }}" disabled>
-                                                                    </div>
-                                                                </div>
+
                                                                 <div class="form-group">
                                                                     <div class="input-group input-group-sm"">
                                                                         <div class="input-group-prepend">
@@ -141,8 +130,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -175,20 +164,23 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text">D</span>
-                                                                        <textarea name="descripcioneli" class="form-control" cols="30" rows="10">{{ $prod->descripcion }}</textarea>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <textarea name="descripcioneli" class="form-control" disabled>{{ $prod->descripcion }}</textarea>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text">FC</span>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FC</span>
+                                                                        </div>
                                                                         <input type="text" class="form-control input-lg" name="fecha_createdeli" value="Creado: {{ $prod->created_at }}" disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text">FM</span>
+                                                                    <div class="input-group input-group-sm">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text" id="inputGroup-sizing-sm">FM</span>
+                                                                        </div>
                                                                         <input type="text" class="form-control input-lg" name="fecha_updatedeli" value="Modificado: {{ $prod->updated_at }}" disabled>
                                                                     </div>
                                                                 </div>
