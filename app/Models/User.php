@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    protected $table = 'usuarios';
 
     /**
      * The attributes that are mass assignable.
@@ -49,5 +50,10 @@ class User extends Authenticatable
     public function cliente()
     {
         return $this->belongsTo('App\Models\Cliente');
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->clave;
     }
 }
